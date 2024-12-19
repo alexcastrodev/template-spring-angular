@@ -1,0 +1,37 @@
+#!/bin/bash
+
+# Check if package.json exists in the current directory
+if [ ! -f "package.json" ]; then
+  echo "Error: package.json not found in the current directory."
+  exit 1
+fi
+
+# Check if Yarn is installed
+if ! command -v yarn &> /dev/null; then
+  echo "Error: Yarn is not installed. Please install it and try again."
+  exit 1
+fi
+
+# Run yarn install
+echo "Running yarn install..."
+yarn install
+
+# Check if yarn install succeeded
+if [ $? -eq 0 ]; then
+  echo "Yarn install completed successfully."
+else
+  echo "Error: yarn install failed. Check the logs above for details."
+  exit 1
+fi
+
+# Start the application in watch mode
+echo "Starting the Node.js application in watch mode..."
+yarn start --host 0.0.0.0
+
+# Check if yarn watch succeeded
+if [ $? -eq 0 ]; then
+  echo "Application is running in watch mode."
+else
+  echo "Error: yarn watch failed. Check the logs above for details."
+  exit 1
+fi

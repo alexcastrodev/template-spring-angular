@@ -1,0 +1,18 @@
+services:
+  web:
+    build:
+      context: ./webapp
+    working_dir: /app
+    command: sh ./startup
+    volumes:
+      - ./webapp:/app
+    ports:
+      - '4200:4200'
+    environment:
+      - NODE_ENV=development
+  backend:
+    build:
+      context: .
+    working_dir: /app
+    ports:
+      - '9000:8080'
