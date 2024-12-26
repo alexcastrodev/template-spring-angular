@@ -1,4 +1,4 @@
-FROM eclipse-temurin:21-jdk as base
+FROM eclipse-temurin:21-jdk
 
 WORKDIR /app
 
@@ -14,6 +14,10 @@ COPY . .
 RUN cd webapp && \
     npm install && \
     npm run build:production && \
+    rm -rf ../src/main/resources/static/* && \
+    mkdir -p ../src/main/resources/static/ && \
+    mv dist/* ../src/main/resources/static/ && \
+    rm -rf dist && \
     cd ..
 
 RUN ./gradlew build
